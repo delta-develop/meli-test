@@ -1,6 +1,10 @@
-from matrix_diagonals import get_right_diagonals
+from matrix_diagonals import get_diagonals_in, get_diagonals_re,search_in, search_re
 from random import randint
 import time
+import re
+
+regex = re.compile(r"[A]{4}|[T]{4}|[G]{4}|[C]{4}")
+
 
 def timeit(method):
     def timed(*args, **kw):
@@ -16,25 +20,56 @@ def timeit(method):
     return timed
 
 @timeit
-def get_columns(matrix):
+def get_columns_re(matrix):
     n = len(matrix)
+    coincidences = 0
+
     for i in range(n):
         str_ = "".join(matrix[j][i] for j in range(n))
-        print(str_)
-    
-    print("\n")
+        coincidences += search_re(str_)
+
+    print(coincidences)
 
 @timeit
-def rotate_matrix(matrix):
+def get_columns_in(matrix):
     n = len(matrix)
-    rotated = []
+    coincidences = 0
+    for i in range(n):
+        str_ = "".join(matrix[j][i] for j in range(n))
+        coincidences += search_in(str_)
+    
+    print(coincidences)
+    
+
+@timeit
+def rotate_matrix_re(matrix):
+    n = len(matrix)
+    coincidences = 0
+    
     
     for j in range(n-1,-1,-1):  
-        rotated.append("".join([matrix[i][j] for i in range(n)]))  
+        str_ = "".join([matrix[i][j] for i in range(n)])
+        coincidences += search_re(str_)
 
-    return rotated
+    print(coincidences)
 
+@timeit
+def rotate_matrix_in(matrix):
+    n = len(matrix)
+    coincidences = 0
+    
+    for j in range(n-1,-1,-1):  
+        str_ = "".join([matrix[i][j] for i in range(n)])
+        coincidences += search_in(str_)
 
+    print(coincidences)
+
+    
+@timeit
+def generate_matrix(size):
+    dna = {1:"A",2:"T",3:"G",4:"C"}   
+    dna_matrix = [[dna[randint(1,4)] for i in range(size)] for j in range(size)]
+    return dna_matrix
 
 
 
@@ -47,16 +82,26 @@ dna_matrix =   ["XATGCGA",
                 "XXXXXXX"]
 
 
-dna = {1:"A",2:"T",3:"G",4:"C"}   
-n = 100 
-dna_matrix = [[dna[randint(1,4)] for i in range(n)] for j in range(n)]
+dna_matrix = generate_matrix(1000)
 
-print(" \n".join(" ".join(row) for row in dna_matrix))
-print("\n")
+
+# print(" \n".join(" ".join(row) for row in dna_matrix))
+# print("\n")
+
+get_diagonals_re(dna_matrix)
+get_diagonals_in(dna_matrix)
+
+get_columns_re(dna_matrix)
+get_columns_in(dna_matrix)
+
+rotate_matrix_re(dna_matrix)
+rotate_matrix_in(dna_matrix)
+
+
 # get_columns(dna_matrix)
-get_right_diagonals(dna_matrix)
-print("\n")
-rotated_matrix = rotate_matrix(dna_matrix)
-print(" \n".join(" ".join(row) for row in rotated_matrix))
-print("\n")
-get_right_diagonals(rotated_matrix)
+# get_right_diagonals(dna_matrix)
+# print("\n")
+# rotated_matrix = rotate_matrix(dna_matrix)
+# print(" \n".join(" ".join(row) for row in rotated_matrix))
+# print("\n")
+# get_right_diagonals(rotated_matrix)
