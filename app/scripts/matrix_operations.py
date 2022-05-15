@@ -1,8 +1,9 @@
-from utils import diagonal_to_string, pattern_lookup, timeit
+from app.utils.helpers import diagonal_to_string, pattern_lookup, timeit
+from typing import NoReturn, List
 
 
 @timeit
-def search_in_diagonals(dna_matrix):
+def search_in_diagonals(dna_matrix: List[List[str]]) -> None:
     matrix_size = len(dna_matrix)
     group_size = 4
     coincidences = 0
@@ -24,7 +25,7 @@ def search_in_diagonals(dna_matrix):
 
 
 @timeit
-def rotate_matrix_90_deg(matrix):
+def rotate_matrix_90_deg(matrix: List[List[str]]) -> List[List[str]]:
     matrix_size = len(matrix)
     rotated_matrix = []
     last_column = matrix_size - 1
@@ -38,7 +39,7 @@ def rotate_matrix_90_deg(matrix):
 
 
 @timeit
-def search_in_rows(matrix):
+def search_in_rows(matrix: List[List[str]]) -> None:
     coincidences = 0
 
     for row in matrix:
