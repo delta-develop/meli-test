@@ -4,15 +4,15 @@ from random import randint
 
 def pattern_lookup(string):
     coincidences = 0
-    patterns = ["AAAA", "TTTT", "GGGG", "CCCC"]
-    for pattern in patterns:
+    dna_sequence_patterns = ["AAAA", "TTTT", "GGGG", "CCCC"]
+    for pattern in dna_sequence_patterns:
         coincidences += string.count(pattern)
 
     return coincidences
 
 
-def diagonal_to_string(matrix, n, i, j):
-    return "".join(matrix[i + k][j + k] for k in range(n - i - j))
+def diagonal_to_string(matrix, matrix_size, i, j):
+    return "".join(matrix[i + k][j + k] for k in range(matrix_size - i - j))
 
 
 def timeit(method):
