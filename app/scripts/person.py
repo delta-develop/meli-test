@@ -1,6 +1,7 @@
 from typing import List
 from app.scripts.dna_matrix import DNAMatrix
 from app.utils.helpers import timeit
+from app.scripts.dna_handler_definition import DNAHandler
 
 
 class Person:
@@ -8,9 +9,7 @@ class Person:
         self.dna_matrix = DNAMatrix(dna_sequences)
 
     @timeit
-    def is_mutant(self):
-        self.dna_matrix.row_search()
-        self.dna_matrix.diagonal_search()
-        self.dna_matrix.rotate_matrix_90_deg()
-        self.dna_matrix.diagonal_search()
-        self.dna_matrix.row_search()
+    def is_mutant(self, dna_handler: DNAHandler) -> None:
+        result = dna_handler.handle(self.dna_matrix)
+        print(f"is mutant: {result}")
+        return result

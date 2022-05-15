@@ -1,19 +1,28 @@
 from fastapi import FastAPI, Response
-from app.scripts.is_mutant import is_mutant
 from app.scripts.person import Person
-from app.utils.helpers import generate_matrix
+from app.utils.helpers import generate_matrix, print_matrix
+from app.scripts.dna_handlers import (
+    RowHandler,
+    RightDiagonalHandler,
+    LeftDiagonalHandler,
+    ColumnHandler,
+)
 
 app = FastAPI()
 
+row = RowHandler()
+right_diagonal = RightDiagonalHandler()
+left_diagonal = LeftDiagonalHandler()
+column = ColumnHandler()
+
+row.set_next(right_diagonal).set_next(column).set_next(left_diagonal)
+
 
 @app.post("/")
-def read_root(body: dict, response: Response):
-    dna_matrix = generate_matrix(size=10000)
+async def read_root(body: dict, response: Response):
+    dna_matrix = generate_matrix(size=4)
     print("------  OOP -----")
     p = Person(dna_matrix)
-    p.is_mutant()
-    print("\n\n------  Only functions -----")
-    is_mutant(dna_matrix)
-    print("------  Only functions -----\n\n")
+    p.is_mutant(row)
 
     return {"is_mutant": False}

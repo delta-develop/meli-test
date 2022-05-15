@@ -1,16 +1,16 @@
 from typing import List
+from xmlrpc.client import Boolean
 from app.utils.helpers import timeit
 
 
 class DNAMatrix:
+
+    MAXIMUM_COINCIDENCES = 2
+
     def __init__(self, dna_sequences: List) -> None:
         self.dna_sequences = dna_sequences
         self.size = len(dna_sequences)
-
-    def __print_dna_matrix(self) -> None:
-        for row in self.dna_sequences:
-            dna_sequence = " ".join(row)
-            print(dna_sequence)
+        self.coincidences = 0
 
     def __convert_diagonal_to_string(self, i: int, j: int) -> str:
         result = "".join(
@@ -18,42 +18,39 @@ class DNAMatrix:
         )
         return result
 
-    @staticmethod
-    def pattern_lookup(string) -> int:
-        dna_sequence_patterns = ["AAAA", "TTTT", "GGGG", "CCCC"]
-        coincidences = 0
+    def pattern_lookup(self, string: str) -> int:
+        dna_sequence_patterns: List = ["AAAA", "TTTT", "GGGG", "CCCC"]
         for pattern in dna_sequence_patterns:
-            coincidences += string.count(pattern)
+            self.coincidences += string.count(pattern)
+            if self.coincidences >= DNAMatrix.MAXIMUM_COINCIDENCES:
+                return True
 
-        return coincidences
+        return False
 
-    @timeit
-    def diagonal_search(self) -> None:
+    def diagonal_search(self) -> Boolean:
         group_size = 4
-        coincidences = 0
         matrix_border = self.size - group_size + 1
 
         for j in range(matrix_border):
             dna_sequence = self.__convert_diagonal_to_string(i=0, j=j)
-            coincidences += DNAMatrix.pattern_lookup(dna_sequence)
+            if self.pattern_lookup(dna_sequence):
+                return True
 
         for i in range(1, matrix_border):
             dna_sequence = self.__convert_diagonal_to_string(i=i, j=0)
-            coincidences += DNAMatrix.pattern_lookup(dna_sequence)
+            if self.pattern_lookup(dna_sequence):
+                return True
 
-        print(f"Diagonals: {coincidences}")
+        return False
 
-    @timeit
-    def row_search(self) -> None:
-        coincidences = 0
-
+    def row_search(self) -> Boolean:
         for row in self.dna_sequences:
             dna_sequence = "".join(row)
-            coincidences += DNAMatrix.pattern_lookup(dna_sequence)
+            if self.pattern_lookup(dna_sequence):
+                return True
 
-        print(f"Rows: {coincidences}")
+        return False
 
-    @timeit
     def rotate_matrix_90_deg(self) -> None:
         rotated_matrix = []
         last_column = self.size - 1
