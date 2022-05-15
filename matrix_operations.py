@@ -1,33 +1,41 @@
 from utils import diagonal_to_string, pattern_lookup, timeit
 
-    
+
 @timeit
 def search_in_diagonals(dna_matrix):
-    n = len(dna_matrix)
+    matrix_size = len(dna_matrix)
     group_size = 4
     coincidences = 0
+    matrix_border = matrix_size - group_size + 1
 
-    for j in range(n-group_size+1):
-        str_ = diagonal_to_string(matrix=dna_matrix,n=n,i=0,j=j)
-        coincidences += pattern_lookup(str_)
+    for j in range(matrix_border):
+        dna_sequence = diagonal_to_string(
+            matrix=dna_matrix, matrix_size=matrix_size, i=0, j=j
+        )
+        coincidences += pattern_lookup(dna_sequence)
 
-    for i in range(1,n-group_size+1):
-        str_ = diagonal_to_string(matrix=dna_matrix,n=n,i=i,j=0)
-        coincidences += pattern_lookup(str_)
-    
-    print(f"dual for: {coincidences}")
+    for i in range(1, matrix_border):
+        dna_sequence = diagonal_to_string(
+            matrix=dna_matrix, matrix_size=matrix_size, i=i, j=0
+        )
+        coincidences += pattern_lookup(dna_sequence)
+
+    print(f"Diagonals: {coincidences}")
 
 
 @timeit
 def rotate_matrix_90_deg(matrix):
-    n = len(matrix)
+    matrix_size = len(matrix)
     rotated_matrix = []
-    
-    for j in range(n-1,-1,-1):  
-        rotated_matrix.append([matrix[i][j] for i in range(n)])
-        
+    last_column = matrix_size - 1
+    first_column = -1
+    step = -1
+
+    for j in range(last_column, first_column, step):
+        rotated_matrix.append([matrix[i][j] for i in range(matrix_size)])
 
     return rotated_matrix
+
 
 @timeit
 def search_in_rows(matrix):
