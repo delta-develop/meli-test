@@ -15,6 +15,11 @@ def get_settings():
     return Settings()
 
 
+@app.get("/")
+async def root():
+    return {"hello": "world"}
+
+
 @app.get("/info")
 async def info(settings: Settings = Depends(get_settings)):
     return {"app_name": settings.app_name, "admin_email": settings.admin_email}

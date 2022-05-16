@@ -24,5 +24,7 @@ client = motor_asyncio.AsyncIOMotorClient(
 )
 
 database = client.dna_analysis
+testing_db = client.test_dna_analysis
 
 dna_results_collection = database.get_collection("dna_analysis_results")
+test_dna_results_collection = database.get_collection("test_dna_analysis_result")
