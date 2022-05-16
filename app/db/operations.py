@@ -43,4 +43,4 @@ async def get_statistics() -> dict:
     async for item in stats:
         result = item
 
-    return item
+    return result
