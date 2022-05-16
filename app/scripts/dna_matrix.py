@@ -1,6 +1,4 @@
 from typing import List
-from xmlrpc.client import Boolean
-from app.utils.helpers import timeit
 
 
 class DNAMatrix:
@@ -27,7 +25,7 @@ class DNAMatrix:
 
         return False
 
-    def diagonal_search(self) -> Boolean:
+    def diagonal_search(self) -> bool:
         group_size = 4
         matrix_border = self.size - group_size + 1
 
@@ -43,7 +41,7 @@ class DNAMatrix:
 
         return False
 
-    def row_search(self) -> Boolean:
+    def row_search(self) -> bool:
         for row in self.dna_sequences:
             dna_sequence = "".join(row)
             if self.pattern_lookup(dna_sequence):
