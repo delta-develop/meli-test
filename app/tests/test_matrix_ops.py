@@ -1,76 +1,12 @@
-import pytest
-from app.scripts.dna_matrix import DNAMatrix
-from app.utils.helpers import print_matrix
-
-
-@pytest.fixture
-def bad_matrix():
-    matrix = [
-        "_AAA__",
-        "___A__",
-        "___A__",
-        "__A___",
-        "_A_A__",
-        "____A_",
-    ]
-
-    return DNAMatrix(matrix)
-
-
-@pytest.fixture
-def single_matrix():
-    matrix = [
-        "_AAAA_",
-        "_A____",
-        "AA____",
-        "_A____",
-        "__A___",
-        "___A__",
-    ]
-
-    return DNAMatrix(matrix)
-
-
-@pytest.fixture
-def horizontal_matrix():
-    matrix = [
-        "AAAAAA",
-        "CCCCCC",
-        "GGGGGG",
-        "TTTTTT",
-        "AAAAAA",
-        "CCCCCC",
-    ]
-
-    return DNAMatrix(matrix)
-
-
-@pytest.fixture
-def diagonal_matrix():
-    matrix = [
-        "_____A",
-        "____A_",
-        "___A_G",
-        "__A_G_",
-        "_A_G__",
-        "A_G___",
-    ]
-
-    return DNAMatrix(matrix)
-
-
-@pytest.fixture
-def diagonal_matrix_lower():
-    matrix = [
-        "______",
-        "A_____",
-        "GA____",
-        "_GA___",
-        "__GA__",
-        "___G__",
-    ]
-
-    return DNAMatrix(matrix)
+from app.tests.fixtures import (
+    bad_matrix,
+    single_matrix,
+    horizontal_matrix,
+    diagonal_matrix,
+    angled_matrix,
+    empty_matrix,
+    diagonal_matrix_lower,
+)
 
 
 def test_matrix_rotation(horizontal_matrix):
