@@ -1,13 +1,12 @@
-import os
 from app.models.person import PersonSchema
 from fastapi.encoders import jsonable_encoder
-from app.settings.settings import MONGO_DETAILS, USER, PASSWORD, dna_results_collection
+from app.settings.settings import collection
 
 
 async def add_result(dna_data: dict, is_mutant) -> None:
     person = PersonSchema(**{"dna": dna_data, "is_mutant": is_mutant})
     person = jsonable_encoder(person)
-    await dna_results_collection.insert_one(person)
+    await collection.insert_one(person)
 
 
 async def get_statistics() -> dict:
@@ -38,7 +37,7 @@ async def get_statistics() -> dict:
             }
         },
     ]
-    stats = dna_results_collection.aggregate(pipeline)
+    stats = collection.aggregate(pipeline)
 
     async for item in stats:
         result = item

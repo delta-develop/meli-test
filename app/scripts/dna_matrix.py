@@ -10,7 +10,7 @@ class DNAMatrix:
         self.size = len(dna_sequences)
         self.coincidences = 0
 
-    def __convert_diagonal_to_string(self, i: int, j: int) -> str:
+    def convert_diagonal_to_string(self, i: int, j: int) -> str:
         result = "".join(
             self.dna_sequences[i + k][j + k] for k in range(self.size - i - j)
         )
@@ -30,20 +30,19 @@ class DNAMatrix:
         matrix_border = self.size - group_size + 1
 
         for j in range(matrix_border):
-            dna_sequence = self.__convert_diagonal_to_string(i=0, j=j)
+            dna_sequence = self.convert_diagonal_to_string(i=0, j=j)
             if self.pattern_lookup(dna_sequence):
                 return True
 
         for i in range(1, matrix_border):
-            dna_sequence = self.__convert_diagonal_to_string(i=i, j=0)
+            dna_sequence = self.convert_diagonal_to_string(i=i, j=0)
             if self.pattern_lookup(dna_sequence):
                 return True
 
         return False
 
     def row_search(self) -> bool:
-        for row in self.dna_sequences:
-            dna_sequence = "".join(row)
+        for dna_sequence in self.dna_sequences:
             if self.pattern_lookup(dna_sequence):
                 return True
 
@@ -56,6 +55,8 @@ class DNAMatrix:
         step = -1
 
         for j in range(last_column, first_column, step):
-            rotated_matrix.append([self.dna_sequences[i][j] for i in range(self.size)])
+            rotated_matrix.append(
+                "".join([self.dna_sequences[i][j] for i in range(self.size)])
+            )
 
         self.dna_sequences = rotated_matrix
