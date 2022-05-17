@@ -2,6 +2,7 @@ from __future__ import annotations
 from app.routes.mutant_router import router as DNAAnalysisRouter
 from app.routes.stats_router import router as StatsRouter
 from functools import lru_cache
+from fastapi import FastAPI
 from app.settings.settings import (
     Settings,
     ENVIRONMENT,
