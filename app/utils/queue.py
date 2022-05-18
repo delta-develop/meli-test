@@ -1,24 +1,24 @@
 import asyncio
 from queue import Queue
 from app.db.operations import insert_bulk_data, insert_one
-from datetime import datetime
-import copy
-from app.tasks.celery_worker import test
-from celery import group
 
 
 class MongoQueue:
     def __init__(self):
-        self.job_queue = Queue()
+        self.job_queue = Queue(maxsize=502)
 
     async def add_job(self, data):
 
-        self.job_queue.put(test.s(data))
+        self.job_queue.put(data)
 
         if self.job_queue.qsize() >= 500:
-
+            # print(f"Enviando jobs: {self.job_queue.qsize()}")
             await self.send_jobs()
-            await self.clear_queue()
+
+            # await self.send_jobs()
+            # print(f"jobs enviados: {self.job_queue.qsize()}")
+            # await self.clear_queue()
+            # print(f"limpiando cola: {self.job_queue.qsize()}")
 
     async def clear_queue(self):
         with self.job_queue.mutex:
@@ -26,9 +26,9 @@ class MongoQueue:
 
     async def send_jobs(self):
         # await insert_bulk_data(self.job_queue.queue)
-        x = group(list(self.job_queue.queue))
-        # test.delay(list(self.job_queue.queue))
-        r = x.delay()
+        # print(f"jobs enviados: {self.job_queue.qsize()}")
+        await insert_bulk_data(self.job_queue)
+        # print(f"jobs enviados: {self.job_queue.qsize()}")
 
     @property
     def queue_size(self):

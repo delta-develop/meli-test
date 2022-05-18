@@ -22,15 +22,15 @@ mongo_queue = MongoQueue()
 async def mutant(response: Response, request: DNAMatrixSchema = Body(...)):
     request_data = jsonable_encoder(request)
     dna_matrix = request_data["dna"]
-    is_mutant = True
 
     p = Person(dna_matrix)
     is_mutant = p.is_mutant(main_handler)
 
-    # test.delay(dna_matrix)
+    # await insert_one({"dna": dna_matrix, "is_mutant": is_mutant})
+
     await mongo_queue.add_job({"dna": dna_matrix, "is_mutant": is_mutant})
 
     if not is_mutant:
         response.status_code = status.HTTP_403_FORBIDDEN
 
-    return True
+    return {"is_mutant": is_mutant}

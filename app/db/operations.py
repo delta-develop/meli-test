@@ -2,11 +2,12 @@ from app.settings.settings import collection
 import copy
 
 
-async def insert_bulk_data(data) -> None:
-    # data_to_insert = copy.deepcopy(data)
-    print(data)
+async def insert_bulk_data(data_queue) -> None:
+    data_to_insert = []
+    while data_queue.empty() == False:
+        data_to_insert.append(data_queue.get())
     try:
-        await collection.insert_many(data)
+        await collection.insert_many(data_to_insert)
     except Exception as e:
         print("🛑🛑🛑🛑🛑🛑 duplicated 🛑🛑🛑🛑🛑🛑")
 
