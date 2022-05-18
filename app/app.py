@@ -10,6 +10,7 @@ from app.settings.settings import (
     create_collection,
 )
 
+
 app = FastAPI()
 app.include_router(DNAAnalysisRouter, tags=["DNAAnalysis"], prefix="/mutant")
 app.include_router(StatsRouter, tags=["Statistics"], prefix="/stats")
