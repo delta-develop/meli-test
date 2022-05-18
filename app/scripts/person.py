@@ -8,5 +8,5 @@ class Person:
         self.dna_matrix = DNAMatrix(dna_sequences)
 
     async def is_mutant(self, dna_handler: DNAHandler):
-        result = dna_handler.handle(self.dna_matrix)
+        result = await dna_handler.handle(self.dna_matrix)
         return result

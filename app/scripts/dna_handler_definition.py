@@ -5,11 +5,11 @@ from typing import Any, Optional
 
 class DNAHandler(ABC):
     @abstractmethod
-    def set_next(self, dna_handler: DNAHandler) -> DNAHandler:
+    async def set_next(self, dna_handler: DNAHandler) -> DNAHandler:
         ...
 
     @abstractmethod
-    def handle(self, request) -> Any:
+    async def handle(self, request) -> Any:
         ...
 
 
@@ -22,6 +22,6 @@ class AbstractDNAHandler(DNAHandler):
         return dna_handler
 
     @abstractmethod
-    def handle(self, request: Any) -> Any:
+    async def handle(self, request: Any) -> Any:
         if self._next_handler:
-            return self._next_handler.handle(request)
+            return await self._next_handler.handle(request)
