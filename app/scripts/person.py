@@ -4,9 +4,9 @@ from typing import Any, List
 
 
 class Person:
-    def __init__(self, dna_sequences: List[Any]) -> None:
+    def __init__(self, dna_sequences: List[Any]):
         self.dna_matrix = DNAMatrix(dna_sequences)
 
-    def is_mutant(self, dna_handler: DNAHandler) -> bool:
+    async def is_mutant(self, dna_handler: DNAHandler):
         result = dna_handler.handle(self.dna_matrix)
         return result

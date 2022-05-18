@@ -2,10 +2,7 @@ from app.settings.settings import collection
 import copy
 
 
-async def insert_bulk_data(data_queue) -> None:
-    data_to_insert = []
-    while data_queue.empty() == False:
-        data_to_insert.append(data_queue.get())
+async def insert_bulk_data(data_to_insert) -> None:
     try:
         await collection.insert_many(data_to_insert)
     except Exception as e:

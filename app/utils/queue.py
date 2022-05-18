@@ -1,6 +1,10 @@
 import asyncio
 from queue import Queue
 from app.db.operations import insert_bulk_data, insert_one
+from app.utils.helpers import configure_handlers
+
+
+main_handler = configure_handlers()
 
 
 class MongoQueue:
@@ -12,24 +16,13 @@ class MongoQueue:
         self.job_queue.put(data)
 
         if self.job_queue.qsize() >= 500:
-            # print(f"Enviando jobs: {self.job_queue.qsize()}")
-            await self.send_jobs()
 
-            # await self.send_jobs()
-            # print(f"jobs enviados: {self.job_queue.qsize()}")
-            # await self.clear_queue()
-            # print(f"limpiando cola: {self.job_queue.qsize()}")
+            data_to_insert = await self.convert_to_data()
+            await insert_bulk_data(data_to_insert)
 
-    async def clear_queue(self):
-        with self.job_queue.mutex:
-            self.job_queue.queue.clear()
+    async def convert_to_data(self):
+        data_to_insert = []
+        while self.job_queue.empty() == False:
+            data_to_insert.append(self.job_queue.get())
 
-    async def send_jobs(self):
-        # await insert_bulk_data(self.job_queue.queue)
-        # print(f"jobs enviados: {self.job_queue.qsize()}")
-        await insert_bulk_data(self.job_queue)
-        # print(f"jobs enviados: {self.job_queue.qsize()}")
-
-    @property
-    def queue_size(self):
-        return self.job_queue.qsize()
+        return data_to_insert
