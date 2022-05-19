@@ -1,7 +1,6 @@
-version: '3'
+version: "3"
 
 services:
-
   mongo:
     image: mongo
     restart: always
@@ -27,7 +26,6 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
     depends_on:
       - mongo
-
 
 networks:
   default:

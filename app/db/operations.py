@@ -1,12 +1,12 @@
-from app.models.person import PersonSchema
-from fastapi.encoders import jsonable_encoder
+from typing import List
 from app.settings.settings import collection
 
 
-async def add_result(dna_data: dict, is_mutant) -> None:
-    person = PersonSchema(**{"dna": dna_data, "is_mutant": is_mutant})
-    person = jsonable_encoder(person)
-    await collection.insert_one(person)
+async def insert_bulk_data(data_to_insert: List) -> None:
+    try:
+        await collection.insert_many(data_to_insert)
+    except Exception as e:
+        print("🛑🛑🛑🛑🛑🛑 duplicated 🛑🛑🛑🛑🛑🛑")
 
 
 async def get_statistics() -> dict:
