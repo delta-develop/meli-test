@@ -1,9 +1,8 @@
 from typing import List
 from app.settings.settings import collection
-from app.utils.queue import MongoQueue
 
 
-async def insert_bulk_data(data_to_insert: MongoQueue) -> None:
+async def insert_bulk_data(data_to_insert: List) -> None:
     try:
         await collection.insert_many(data_to_insert)
     except Exception as e:

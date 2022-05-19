@@ -1,6 +1,6 @@
 from queue import Queue
 from app.utils.helpers import configure_handlers
-
+from app.db.operations import insert_bulk_data
 
 main_handler = configure_handlers()
 
@@ -12,8 +12,6 @@ class MongoQueue:
 
     async def add_job(self, data):
         self.job_queue.put(data)
-
-        return self.queue_size
 
     async def convert_queue_to_list(self):
         data_to_insert = []
@@ -31,3 +29,8 @@ class MongoQueue:
     @property
     def queue_size(self):
         return self.job_queue.qsize()
+
+    async def empty_the_queue(self):
+        data_to_insert = await self.convert_queue_to_list()
+        if data_to_insert:
+            await insert_bulk_data(data_to_insert)
