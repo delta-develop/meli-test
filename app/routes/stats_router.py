@@ -9,7 +9,7 @@ router = APIRouter()
     response_description="Statistics of DNA results.",
     status_code=status.HTTP_200_OK,
 )
-async def stats(response: Response):
+async def stats(response: Response) -> dict:
     stats = await get_statistics()
 
     return stats

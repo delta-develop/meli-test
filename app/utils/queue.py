@@ -6,8 +6,8 @@ from app.db.operations import insert_bulk_data
 
 class MongoQueue:
     def __init__(self, max_queue_size: int) -> None:
-        self.job_queue = Queue(maxsize=max_queue_size + 2)
-        self.max_queue_size = max_queue_size
+        self.job_queue: Queue = Queue(maxsize=max_queue_size + 2)
+        self.max_queue_size: int = max_queue_size
 
     async def add_job(self, analysis_result: dict) -> None:
         self.job_queue.put(analysis_result)

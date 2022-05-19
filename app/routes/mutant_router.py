@@ -14,7 +14,7 @@ async def is_mutant(
     response: Response,
     background_tasks: BackgroundTasks,
     request: DNAMatrixSchema = Body(...),
-):
+) -> dict:
 
     analysis_result = await analyze_adn(request, response)
     background_tasks.add_task(save_data, analysis_result)

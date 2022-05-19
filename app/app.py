@@ -23,7 +23,7 @@ app.include_router(StatsRouter, tags=["Statistics"], prefix="/stats")
 
 
 @app.on_event("startup")
-async def startup_event():
+async def startup_event() -> None:
     print("Setting up database...")
     database, collection_name = get_database_and_collection_name(ENVIRONMENT)
     await create_collection(database, collection_name)
@@ -31,7 +31,7 @@ async def startup_event():
 
 @app.on_event("startup")
 @repeat_every(seconds=int(EMPTYING_TIME))
-async def shutdown_event():
+async def shutdown_event() -> None:
 
     if mongo_queue.queue_size > 0:
         print("Emptying queues...")

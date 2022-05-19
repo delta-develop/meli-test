@@ -9,6 +9,4 @@ async def test_stats():
         response = await client.get("/stats/")
 
     assert response.status_code == 200
-    assert "mutants" in response.json()
-    assert "non-mutants" in response.json()
     assert "ratio_mutants-non_mutants" in response.json()

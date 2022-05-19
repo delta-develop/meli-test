@@ -1,4 +1,5 @@
 import os
+from typing import Any, Optional, Tuple
 
 from dotenv import load_dotenv
 from motor import motor_asyncio
@@ -25,14 +26,14 @@ client = motor_asyncio.AsyncIOMotorClient(
 )
 
 
-async def create_collection(database, collection_name):
+async def create_collection(database: Any, collection_name: str) -> None:
     try:
         await database.create_collection(collection_name)
     except Exception as e:
         print("Collection already exists.")
 
 
-def get_database_and_collection_name(env):
+def get_database_and_collection_name(env: Optional[str]) -> Tuple[Any, str]:
     if env == "PROD":
         database = client.prod_dna_analysis
         collection_name = "prod_dna_results"
@@ -46,14 +47,10 @@ def get_database_and_collection_name(env):
     return database, collection_name
 
 
-def get_collection(database, collection_name):
+def get_collection(database: Any, collection_name: str) -> Any:
     collection = database.get_collection(collection_name)
     return collection
 
 
 database, collection_name = get_database_and_collection_name(ENVIRONMENT)
 collection = get_collection(database, collection_name)
-
-
-def drop_testing_db():
-    client.drop_database("testing_dna_analysis")

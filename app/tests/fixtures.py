@@ -3,7 +3,7 @@ from app.scripts.dna_matrix import DNAMatrix
 
 
 @pytest.fixture
-def bad_matrix():
+def bad_matrix() -> DNAMatrix:
     matrix = [
         "TAAATT",
         "GGGATT",
@@ -17,7 +17,7 @@ def bad_matrix():
 
 
 @pytest.fixture
-def single_matrix():
+def single_matrix() -> DNAMatrix:
     matrix = [
         "GAAAAG",
         "GATCTC",
@@ -31,7 +31,7 @@ def single_matrix():
 
 
 @pytest.fixture
-def horizontal_matrix():
+def horizontal_matrix() -> DNAMatrix:
     matrix = [
         "AAAAAA",
         "CCCCCC",
@@ -45,7 +45,7 @@ def horizontal_matrix():
 
 
 @pytest.fixture
-def vertical_matrix():
+def vertical_matrix() -> DNAMatrix:
     matrix = [
         "CTCTCT",
         "TCTCTC",
@@ -59,7 +59,7 @@ def vertical_matrix():
 
 
 @pytest.fixture
-def diagonal_matrix():
+def diagonal_matrix() -> DNAMatrix:
     matrix = [
         "CTTTCA",
         "TCCCAT",
@@ -73,7 +73,7 @@ def diagonal_matrix():
 
 
 @pytest.fixture
-def angled_matrix():
+def angled_matrix() -> DNAMatrix:
     matrix = [
         "TCTCTC",
         "TAAAAT",
@@ -87,7 +87,7 @@ def angled_matrix():
 
 
 @pytest.fixture
-def empty_matrix():
+def empty_matrix() -> DNAMatrix:
     matrix = [
         "ACGTAC",
         "GTACGT",
@@ -101,7 +101,7 @@ def empty_matrix():
 
 
 @pytest.fixture
-def diagonal_matrix_lower():
+def diagonal_matrix_lower() -> DNAMatrix:
     matrix = [
         "CCCTTT",
         "ATTCCC",
@@ -115,7 +115,7 @@ def diagonal_matrix_lower():
 
 
 @pytest.fixture
-def almost_mutant_horizontal_matrix():
+def almost_mutant_horizontal_matrix() -> DNAMatrix:
     matrix = [
         "TAAAAT",
         "TTCCCT",
@@ -129,7 +129,7 @@ def almost_mutant_horizontal_matrix():
 
 
 @pytest.fixture
-def almost_mutant_vertical_matrix():
+def almost_mutant_vertical_matrix() -> DNAMatrix:
     matrix = [
         "TAGGGT",
         "TACAAT",

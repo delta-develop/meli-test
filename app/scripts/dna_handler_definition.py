@@ -18,7 +18,7 @@ class AbstractDNAHandler(DNAHandler):
 
     _next_handler: Optional[DNAHandler] = None
 
-    def set_next(self, dna_handler: DNAHandler) -> DNAHandler:
+    def set_next(self, dna_handler):
         self._next_handler = dna_handler
         return dna_handler
 

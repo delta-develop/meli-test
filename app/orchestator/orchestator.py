@@ -1,9 +1,10 @@
 import os
 
+from app.models.dna_matrix import DNAMatrixSchema
 from app.scripts.person import Person
 from app.utils.helpers import configure_handlers
 from app.utils.queue import MongoQueue
-from fastapi import status
+from fastapi import Response, status
 from fastapi.encoders import jsonable_encoder
 
 MONGO_QUEUE_SIZE = os.getenv("MONGO_QUEUE_SIZE")
@@ -11,7 +12,7 @@ main_handler = configure_handlers()
 mongo_queue = MongoQueue(500)
 
 
-async def analyze_adn(request, response):
+async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
     request_data = jsonable_encoder(request)
     dna_matrix = request_data["dna"]
 
@@ -28,7 +29,7 @@ async def analyze_adn(request, response):
     return response
 
 
-async def save_data(data):
+async def save_data(data: dict) -> None:
 
     await mongo_queue.add_job(data)
 
