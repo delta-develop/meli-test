@@ -1,8 +1,7 @@
 from queue import Queue
-from app.utils.helpers import configure_handlers
-from app.db.operations import insert_bulk_data
+from typing import List
 
-main_handler = configure_handlers()
+from app.db.operations import insert_bulk_data
 
 
 class MongoQueue:

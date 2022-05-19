@@ -17,11 +17,15 @@ async def analyze_adn(request, response):
 
     p = Person(dna_matrix)
     is_mutant = await p.is_mutant(main_handler)
+    response = {"is_mutant": is_mutant}
 
-    if not is_mutant:
+    if is_mutant == False:
         response.status_code = status.HTTP_403_FORBIDDEN
+    elif is_mutant == None:
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        response = {"error": "Invalid input data"}
 
-    return {"is_mutant": is_mutant}
+    return response
 
 
 async def save_data(data):
