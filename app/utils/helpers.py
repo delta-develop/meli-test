@@ -7,6 +7,11 @@ from app.scripts.dna_handlers import (
 
 
 def configure_handlers():
+    """Function to configure the order of the responsability chain-
+
+    Returns:
+        _type_: Inscance of the first chain link to start operating.
+    """
     row = RowHandler()
     right_diagonal = RightDiagonalHandler()
     left_diagonal = LeftDiagonalHandler()

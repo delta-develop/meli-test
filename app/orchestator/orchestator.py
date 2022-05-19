@@ -13,6 +13,17 @@ mongo_queue = MongoQueue(500)
 
 
 async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
+    """Function to make all calculus to check if a given input belongs to a
+    mutant.
+
+    Args:
+        request (DNAMatrixSchema): Request from the endpoint /mutant/
+        response (Response): Result of the dna analysis and correspondent
+        http status.
+
+    Returns:
+        dict: Result of dna analysis.
+    """
     request_data = jsonable_encoder(request)
     dna_matrix = request_data["dna"]
 
@@ -29,8 +40,13 @@ async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
     return response
 
 
-async def save_data(data: dict) -> None:
+async def enqueue_data(data: dict) -> None:
+    """Put the results of the analysis into a queue until queue is full
+    or ready to send.
 
+    Args:
+        data (dict): dna matrix and analysis result.
+    """
     await mongo_queue.add_job(data)
 
     if mongo_queue.ready_to_send:

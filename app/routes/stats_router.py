@@ -10,6 +10,11 @@ router = APIRouter()
     status_code=status.HTTP_200_OK,
 )
 async def stats(response: Response) -> dict:
+    """Attend the /stats/ endpoint
+
+    Returns:
+        dict: results of the collected data.
+    """
     stats = await get_statistics()
 
     return stats

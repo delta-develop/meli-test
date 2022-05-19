@@ -27,6 +27,13 @@ client = motor_asyncio.AsyncIOMotorClient(
 
 
 async def create_collection(database: Any, collection_name: str) -> None:
+    """At the start of the application, check if the needed collection exists,
+    create it if not.
+
+    Args:
+        database (Any): Database to look for the collection
+        collection_name (str): Name that our collection will have.
+    """
     try:
         await database.create_collection(collection_name)
     except Exception as e:
@@ -34,6 +41,15 @@ async def create_collection(database: Any, collection_name: str) -> None:
 
 
 def get_database_and_collection_name(env: Optional[str]) -> Tuple[Any, str]:
+    """Based on .env file, give the name of collection and create a database
+    to store the results.
+
+    Args:
+        env (Optional[str]): Environment variable value.
+
+    Returns:
+        Tuple[Any, str]: Database object and collection name.
+    """
     if env == "PROD":
         database = client.prod_dna_analysis
         collection_name = "prod_dna_results"
@@ -48,6 +64,17 @@ def get_database_and_collection_name(env: Optional[str]) -> Tuple[Any, str]:
 
 
 def get_collection(database: Any, collection_name: str) -> Any:
+    """After creating it, we need to match the collection object against
+    it counterpart in MongoDB
+
+
+    Args:
+        database (Any): Database object.
+        collection_name (str): Name of the recently created collection.
+
+    Returns:
+        Any: Collection object to perform operations.
+    """
     collection = database.get_collection(collection_name)
     return collection
 
