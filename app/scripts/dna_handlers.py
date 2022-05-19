@@ -9,6 +9,8 @@ class RowHandler(AbstractDNAHandler):
 
         if is_mutant:
             return True
+        elif is_mutant is None:
+            return None
         else:
             return await super().handle(dna_matrix)
 

@@ -1,3 +1,4 @@
+import re
 from typing import List
 
 
@@ -25,6 +26,13 @@ class DNAMatrix:
 
         return False
 
+    async def validate_dna_string(self, string: str) -> bool:
+        regex = re.compile(r"[^ACGT]")
+
+        if regex.search(string) is not None:
+            return False
+        return True
+
     async def diagonal_search(self) -> bool:
         group_size = 4
         matrix_border = self.size - group_size + 1
@@ -43,6 +51,8 @@ class DNAMatrix:
 
     async def row_search(self) -> bool:
         for dna_sequence in self.dna_sequences:
+            if not await self.validate_dna_string(dna_sequence):
+                return None
             if await self.pattern_lookup(dna_sequence):
                 return True
 
