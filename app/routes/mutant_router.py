@@ -1,12 +1,6 @@
-import asyncio
-from turtle import back
-from fastapi import APIRouter, Body, Response, status, BackgroundTasks
-
 from app.models.dna_matrix import DNAMatrixSchema
-
-from app.models.person import PersonSchema
-from fastapi.encoders import jsonable_encoder
 from app.orchestator.orchestator import analyze_adn, save_data
+from fastapi import APIRouter, BackgroundTasks, Body, Response, status
 
 router = APIRouter()
 

@@ -1,8 +1,8 @@
 import os
+
 from dotenv import load_dotenv
 from motor import motor_asyncio
 from pydantic import BaseSettings
-import asyncio
 
 load_dotenv()
 

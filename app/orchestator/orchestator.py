@@ -1,10 +1,10 @@
-from fastapi.encoders import jsonable_encoder
-from app.scripts.person import Person
+import os
 
+from app.scripts.person import Person
 from app.utils.helpers import configure_handlers
 from app.utils.queue import MongoQueue
-import os
 from fastapi import status
+from fastapi.encoders import jsonable_encoder
 
 MONGO_QUEUE_SIZE = os.getenv("MONGO_QUEUE_SIZE")
 main_handler = configure_handlers()

@@ -1,7 +1,5 @@
-from urllib import response
-from app.app import app
 import pytest
-from app.settings.settings import drop_testing_db
+from app.app import app
 from httpx import AsyncClient
 
 

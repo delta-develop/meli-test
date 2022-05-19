@@ -1,5 +1,4 @@
 from app.scripts.dna_handler_definition import AbstractDNAHandler
-from typing import Any, List
 from app.scripts.dna_matrix import DNAMatrix
 
 

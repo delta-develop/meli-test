@@ -1,6 +1,5 @@
-from fastapi.encoders import jsonable_encoder
-from fastapi import APIRouter, Response, status
 from app.db.operations import get_statistics
+from fastapi import APIRouter, Response, status
 
 router = APIRouter()
 
