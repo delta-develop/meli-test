@@ -45,6 +45,20 @@ def horizontal_matrix():
 
 
 @pytest.fixture
+def vertical_matrix():
+    matrix = [
+        "______",
+        "______",
+        "_GA___",
+        "_GA___",
+        "_GA___",
+        "_GA___",
+    ]
+
+    return DNAMatrix(matrix)
+
+
+@pytest.fixture
 def diagonal_matrix():
     matrix = [
         "_____A",
@@ -103,7 +117,7 @@ def diagonal_matrix_lower():
 @pytest.fixture
 def almost_mutant_horizontal_matrix():
     matrix = [
-        "_AAA__",
+        "_AAAA_",
         "__CCC_",
         "_GGG__",
         "__TTT_",
@@ -120,19 +134,9 @@ def almost_mutant_vertical_matrix():
         "_A____",
         "_AC___",
         "_ACG__",
-        "__CGT_",
+        "_ACGT_",
         "___GT_",
         "____T_",
     ]
 
     return DNAMatrix(matrix)
-
-
-@pytest.fixture
-def not_mutant():
-    return {"is_mutant": False}
-
-
-@pytest.fixture
-def is_mutant():
-    return {"is_mutant": True}

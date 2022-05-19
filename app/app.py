@@ -20,8 +20,3 @@ app.include_router(StatsRouter, tags=["Statistics"], prefix="/stats")
 async def startup_event():
     database, collection_name = get_database_and_collection_name(ENVIRONMENT)
     await create_collection(database, collection_name)
-
-
-@lru_cache()
-def get_settings():
-    return Settings()

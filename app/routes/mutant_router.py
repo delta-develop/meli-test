@@ -8,12 +8,13 @@ from app.utils.helpers import configure_handlers
 from app.utils.queue import MongoQueue
 from app.models.person import PersonSchema
 from fastapi.encoders import jsonable_encoder
-from app.db.operations import insert_one
+from app.db.operations import insert_bulk_data
+import os
 
-
+MONGO_QUEUE_SIZE = os.getenv("MONGO_QUEUE_SIZE")
 router = APIRouter()
 main_handler = configure_handlers()
-mongo_queue = MongoQueue()
+mongo_queue = MongoQueue(500)
 
 
 @router.post(
@@ -26,7 +27,17 @@ async def mutant(response: Response, request: DNAMatrixSchema = Body(...)):
     dna_matrix = request_data["dna"]
 
     p = Person(dna_matrix)
-    result = await p.is_mutant(main_handler)
-    await mongo_queue.add_job({"dna": dna_matrix, "is_mutant": result})
+    is_mutant = await p.is_mutant(main_handler)
 
-    return {"is_mutant": result}
+    ready_to_send = await mongo_queue.add_job(
+        {"dna": dna_matrix, "is_mutant": is_mutant}
+    )
+
+    if ready_to_send:
+        data_to_insert = await mongo_queue.convert_queue_to_list()
+        await insert_bulk_data(data_to_insert)
+
+    if not is_mutant:
+        response.status_code = status.HTTP_403_FORBIDDEN
+
+    return {"is_mutant": is_mutant}
