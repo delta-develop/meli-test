@@ -1,15 +1,29 @@
 from typing import List
+
 from app.settings.settings import collection
 
 
 async def insert_bulk_data(data_to_insert: List) -> None:
+    """Insert given data package to MongoDB.
+
+    Args:
+        data_to_insert (List): Results of the DNA analysis.
+    """
     try:
         await collection.insert_many(data_to_insert)
     except Exception as e:
-        print("🛑🛑🛑🛑🛑🛑 duplicated 🛑🛑🛑🛑🛑🛑")
+        print("Duplicated register found")
 
 
 async def get_statistics() -> dict:
+    """Send to MongoDB a request to count mutants, non mutants and calculate
+    the ratio between those variables.
+
+    Returns:
+        dict: Result of the calculation, may contain or not "mutants" and
+        "non-mutants" field, but it will always include
+        "ratio_mutants-non_mutants", even if it is null.
+    """
     pipeline = [
         {
             "$facet": {

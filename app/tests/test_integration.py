@@ -1,7 +1,5 @@
-from urllib import response
-from app.app import app
 import pytest
-from app.settings.settings import drop_testing_db
+from app.app import app
 from httpx import AsyncClient
 
 
@@ -11,6 +9,4 @@ async def test_stats():
         response = await client.get("/stats/")
 
     assert response.status_code == 200
-    assert "mutants" in response.json()
-    assert "non-mutants" in response.json()
     assert "ratio_mutants-non_mutants" in response.json()

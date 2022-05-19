@@ -1,13 +1,13 @@
-from app.tests.fixtures import (
-    bad_matrix,
-    single_matrix,
-    horizontal_matrix,
-    diagonal_matrix,
-    angled_matrix,
-    empty_matrix,
-    diagonal_matrix_lower,
-)
 import pytest
+from app.tests.fixtures import (
+    angled_matrix,
+    bad_matrix,
+    diagonal_matrix,
+    diagonal_matrix_lower,
+    empty_matrix,
+    horizontal_matrix,
+    single_matrix,
+)
 
 
 @pytest.mark.asyncio

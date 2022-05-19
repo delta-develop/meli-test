@@ -1,4 +1,3 @@
-from random import randint
 import pytest
 from app.utils.queue import MongoQueue
 

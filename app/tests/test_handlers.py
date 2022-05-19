@@ -1,18 +1,18 @@
+import pytest
+from app.scripts.person import Person
 from app.tests.fixtures import (
-    bad_matrix,
-    single_matrix,
-    diagonal_matrix,
-    diagonal_matrix_lower,
-    angled_matrix,
-    empty_matrix,
-    horizontal_matrix,
     almost_mutant_horizontal_matrix,
     almost_mutant_vertical_matrix,
+    angled_matrix,
+    bad_matrix,
+    diagonal_matrix,
+    diagonal_matrix_lower,
+    empty_matrix,
+    horizontal_matrix,
+    single_matrix,
     vertical_matrix,
 )
 from app.utils.helpers import configure_handlers
-import pytest
-from app.scripts.person import Person
 
 
 @pytest.fixture
