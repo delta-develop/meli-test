@@ -19,13 +19,13 @@ gunicorn = "^20.1.0"
 celery = "^5.2.6"
 redis = "^4.3.1"
 fastapi-utils = "^0.2.1"
+python-dotenv = "^0.20.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
 pre-commit = "^2.19.0"
 pytest = "^7.1.2"
 locust = "^2.8.6"
-python-dotenv = "^0.20.0"
 coverage = "^6.3.3"
 
 [build-system]
