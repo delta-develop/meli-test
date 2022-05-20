@@ -6,17 +6,19 @@ services:
     restart: always
     ports:
       - 27017:27017
+    networks:
+      - mongo_network
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
   mongo-express:
-    links:
-      - mongo
     image: mongo-express
     restart: unless-stopped
     ports:
       - 8081:8081
+    networks:
+      - mongo_network
     environment:
       ME_CONFIG_OPTIONS_EDITORTHEME: 3024-night
       ME_CONFIG_BASICAUTH_USERNAME: admin
@@ -27,6 +29,39 @@ services:
     depends_on:
       - mongo
 
+  api:
+    image: meli-test-image
+    ports:
+      - 8000:8000
+    networks:
+      - mongo_network
+    environment:
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MAX_QUEUE_SIZE=1000
+      - PYTHONBUFFERED=1
+      - EMPTYING_TIME=30
+      - ENVIRONMENT=PROD
+      - LOG_LEVEL=DEBUG
+    command:
+      [
+        "gunicorn",
+        "app.app:app",
+        "--bind",
+        "0.0.0.0:8000",
+        "--log-level",
+        "debug",
+        "--workers",
+        "4",
+        "--worker-class",
+        "uvicorn.workers.UvicornWorker",
+        "--threads",
+        "2",
+      ]
+    restart: unless-stopped
+    env_file:
+      - .env
+
 networks:
-  default:
-    name: mongodb_network
+  mongo_network:
+    driver: bridge
