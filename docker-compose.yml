@@ -17,8 +17,8 @@ services:
   mongo-express:
     image: mongo-express
     restart: unless-stopped
-    # ports:
-    #   - 8081:8081
+    ports:
+      - 8081:8081
     expose:
       - "8081"
     networks:
@@ -52,12 +52,11 @@ services:
       - WORKERS_PER_CORE=2
       - HOST=0.0.0.0
       - PORT=8000
-    command: [
+    command:
+      [
         "gunicorn",
         "app.app:app",
         "app/gunicorn_conf.py",
-        # "--workers",
-        # "4",
         "--worker-class",
         "uvicorn.workers.UvicornWorker",
         "--threads",
