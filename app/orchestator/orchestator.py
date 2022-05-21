@@ -6,10 +6,11 @@ from app.utils.helpers import configure_handlers
 from app.utils.queue import MongoQueue
 from fastapi import Response, status
 from fastapi.encoders import jsonable_encoder
+from app.settings.settings import MAX_QUEUE_SIZE
 
-MONGO_QUEUE_SIZE = os.getenv("MONGO_QUEUE_SIZE")
+
 main_handler = configure_handlers()
-mongo_queue = MongoQueue(500)
+mongo_queue = MongoQueue(MAX_QUEUE_SIZE)
 
 
 async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
@@ -29,15 +30,15 @@ async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
 
     p = Person(dna_matrix)
     is_mutant = await p.is_mutant(main_handler)
-    response = {"is_mutant": is_mutant}
+    response_json = {"is_mutant": is_mutant}
 
     if is_mutant == False:
         response.status_code = status.HTTP_403_FORBIDDEN
     elif is_mutant == None:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        response = {"error": "Invalid input data"}
+        response_json = {"error": "Invalid input data"}
 
-    return response
+    return response_json
 
 
 async def enqueue_data(data: dict) -> None:
