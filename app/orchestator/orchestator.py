@@ -30,13 +30,13 @@ async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
 
     p = Person(dna_matrix)
     is_mutant = await p.is_mutant(main_handler)
-    response_json = {"is_mutant": is_mutant}
+    response_json = {"dna": dna_matrix, "is_mutant": is_mutant}
 
     if is_mutant == False:
         response.status_code = status.HTTP_403_FORBIDDEN
     elif is_mutant == None:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        response_json = {"error": "Invalid input data"}
+        response_json["is_mutant"] = "corrupt input"
 
     return response_json
 

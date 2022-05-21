@@ -8,6 +8,8 @@ services:
       - 27017:27017
     networks:
       - mongo_network
+    expose:
+      - "27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
@@ -17,6 +19,8 @@ services:
     restart: unless-stopped
     ports:
       - 8081:8081
+    expose:
+      - "8081"
     networks:
       - mongo_network
     environment:
@@ -33,6 +37,8 @@ services:
     image: meli-test-image
     ports:
       - 8000:8000
+    expose:
+      - "8000"
     networks:
       - mongo_network
     environment:
@@ -43,16 +49,14 @@ services:
       - EMPTYING_TIME=30
       - ENVIRONMENT=PROD
       - LOG_LEVEL=DEBUG
+      - WORKERS_PER_CORE=2
+      - HOST=0.0.0.0
+      - PORT=8000
     command:
       [
         "gunicorn",
         "app.app:app",
-        "--bind",
-        "0.0.0.0:8000",
-        "--log-level",
-        "debug",
-        "--workers",
-        "4",
+        "app/gunicorn_conf.py",
         "--worker-class",
         "uvicorn.workers.UvicornWorker",
         "--threads",
