@@ -22,6 +22,11 @@ app.include_router(DNAAnalysisRouter, tags=["DNAAnalysis"], prefix="/mutant")
 app.include_router(StatsRouter, tags=["Statistics"], prefix="/stats")
 
 
+@app.get("/")
+async def root():
+    return {"hello": "world"}
+
+
 @app.on_event("startup")
 async def startup_event() -> None:
     """Configure the database as soon the application start up."""
