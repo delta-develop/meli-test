@@ -22,5 +22,4 @@ async def is_mutant(
     """
     analysis_result = await analyze_adn(request, response)
     background_tasks.add_task(enqueue_data, analysis_result)
-
     return analysis_result
