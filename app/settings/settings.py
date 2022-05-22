@@ -27,8 +27,12 @@ MAX_QUEUE_SIZE = int(os.getenv("MAX_QUEUE_SIZE", "500"))
 #     str(MONGO_DETAILS), username=USER, password=PASSWORD
 # )
 
+# client = motor_asyncio.AsyncIOMotorClient(
+#     host=MONGO_HOST, port=int(MONGO_PORT), username=USER, password=PASSWORD
+# )
+
 client = motor_asyncio.AsyncIOMotorClient(
-    host=MONGO_HOST, port=int(MONGO_PORT), username=USER, password=PASSWORD
+    host=MONGO_HOST, port=int(MONGO_PORT), username=None, password=None
 )
 
 

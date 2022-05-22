@@ -28,3 +28,6 @@ restart:
 
 ps:
 		docker-compose -f docker-compose.yml ps
+
+start_only_db:
+		docker-compose -f docker-compose_only_db.yml start
