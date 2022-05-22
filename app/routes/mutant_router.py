@@ -1,5 +1,5 @@
 from app.models.dna_matrix import DNAMatrixSchema
-from app.orchestator.orchestator import analyze_adn, enqueue_data
+from app.orchestator.orchestator import analyze_dna, enqueue_data
 from fastapi import APIRouter, BackgroundTasks, Body, Response, status
 
 router = APIRouter()
@@ -11,7 +11,7 @@ async def is_mutant(
     background_tasks: BackgroundTasks,
     request: DNAMatrixSchema = Body(...),
 ) -> dict:
-    """Attend the /mutant/ endpoint, first make the adn analysis, put
+    """Attend the /mutant/ endpoint, first make the dna analysis, put
     the enqueue data process running in background, then return the
     response. After the response has been sent, the background task
     finish their job, putting the result into the queue.
@@ -20,6 +20,6 @@ async def is_mutant(
     Returns:
         dict: Result of the analysis.
     """
-    analysis_result = await analyze_adn(request, response)
+    analysis_result = await analyze_dna(request, response)
     background_tasks.add_task(enqueue_data, analysis_result)
     return analysis_result

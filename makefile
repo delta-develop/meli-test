@@ -29,5 +29,12 @@ restart:
 ps:
 		docker-compose -f docker-compose.yml ps
 
-start_only_db:
-		docker-compose -f docker-compose_only_db.yml start
+up_only_db:
+		docker-compose -f docker-compose_only_db.yml up -d
+
+run_tests:
+		pytest -vv
+
+coverage_report:
+		coverage run -m pytest
+		coverage report -m

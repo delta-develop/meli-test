@@ -1,3 +1,4 @@
+import os
 import re
 from typing import List
 
@@ -7,7 +8,7 @@ class DNAMatrix:
     matrices.
     """
 
-    MAXIMUM_COINCIDENCES = 2
+    MINIMUM_COINCIDENCES = os.getenv("MINIMUM_COINCIDENCES", 3)
 
     def __init__(self, dna_sequences: List) -> None:
         """Each matrix is initialized with the dna matrix data, the size of that
@@ -51,7 +52,7 @@ class DNAMatrix:
         dna_sequence_patterns: List = ["AAAA", "TTTT", "GGGG", "CCCC"]
         for pattern in dna_sequence_patterns:
             self.coincidences += string.count(pattern)
-            if self.coincidences >= DNAMatrix.MAXIMUM_COINCIDENCES:
+            if self.coincidences >= DNAMatrix.MINIMUM_COINCIDENCES:
                 return True
 
         return False
