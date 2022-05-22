@@ -26,13 +26,16 @@ else:
     web_concurrency = int(default_web_concurrency)
 
 if worker_class_env:
-    worker_class = worker_class_env
+    wc = worker_class_env
+else:
+    wc = "sync"
 # Gunicorn config variables
 loglevel = use_loglevel
 workers = web_concurrency
 bind = use_bind
 keepalive = 120
 errorlog = "-"
+worker_class = wc
 
 
 # For debugging and testing
