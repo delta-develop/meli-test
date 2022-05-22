@@ -10,6 +10,7 @@ host = os.getenv("HOST", "0.0.0.0")
 port = os.getenv("PORT", "8000")
 bind_env = os.getenv("BIND", None)
 use_loglevel = os.getenv("LOG_LEVEL", "info")
+worker_class_env = os.getenv("WORKER_CLASS", None)
 if bind_env:
     use_bind = bind_env
 else:
@@ -24,12 +25,15 @@ if web_concurrency_str:
 else:
     web_concurrency = int(default_web_concurrency)
 
+if worker_class_env:
+    worker_class = worker_class_env
 # Gunicorn config variables
 loglevel = use_loglevel
 workers = web_concurrency
 bind = use_bind
 keepalive = 120
 errorlog = "-"
+
 
 # For debugging and testing
 log_data = {
@@ -40,5 +44,6 @@ log_data = {
     "workers_per_core": workers_per_core,
     "host": host,
     "port": port,
+    "worker_class": worker_class_env,
 }
 print(json.dumps(log_data))
