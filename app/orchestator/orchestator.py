@@ -13,7 +13,7 @@ main_handler = configure_handlers()
 mongo_queue = MongoQueue(MAX_QUEUE_SIZE)
 
 
-async def analyze_adn(request: DNAMatrixSchema, response: Response) -> dict:
+async def analyze_dna(request: DNAMatrixSchema, response: Response) -> dict:
     """Function to make all calculus to check if a given input belongs to a
     mutant.
 
