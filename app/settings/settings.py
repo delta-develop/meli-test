@@ -16,23 +16,16 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 
-MONGO_HOST = os.getenv("MONGO_HOST")
+MONGO_HOST = "mongodb://" + os.getenv("MONGO_HOST", "127.0.0.1")
 MONGO_PORT = os.getenv("MONGO_PORT")
-USER = os.getenv("DBUSERNAME")
-PASSWORD = os.getenv("DBPASSWORD")
+DBUSER = os.getenv("DBUSERNAME")
+DBPWD = os.getenv("DBPASSWORD")
 ENVIRONMENT = os.getenv("ENVIRONMENT")
 EMPTYING_TIME = int(os.getenv("EMPTYING_TIME", "27017"))
 MAX_QUEUE_SIZE = int(os.getenv("MAX_QUEUE_SIZE", "500"))
-# client = motor_asyncio.AsyncIOMotorClient(
-#     str(MONGO_DETAILS), username=USER, password=PASSWORD
-# )
-
-# client = motor_asyncio.AsyncIOMotorClient(
-#     host=MONGO_HOST, port=int(MONGO_PORT), username=USER, password=PASSWORD
-# )
 
 client = motor_asyncio.AsyncIOMotorClient(
-    host=MONGO_HOST, port=int(MONGO_PORT), username=None, password=None
+    host=MONGO_HOST, port=int(MONGO_PORT), username=DBUSER, password=DBPWD
 )
 
 

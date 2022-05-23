@@ -11,6 +11,7 @@ from app.tests.fixtures import (
     horizontal_matrix,
     single_matrix,
     vertical_matrix,
+    invalid_matrix,
 )
 from app.utils.helpers import configure_handlers
 
@@ -25,6 +26,13 @@ async def test_horizontal_matrix(horizontal_matrix, main_handler):
     p = Person(horizontal_matrix.dna_sequences)
 
     assert await p.is_mutant(main_handler) == True
+
+
+@pytest.mark.asyncio
+async def test_invalid_matrix(invalid_matrix, main_handler):
+    p = Person(invalid_matrix.dna_sequences)
+
+    assert await p.is_mutant(main_handler) == None
 
 
 @pytest.mark.asyncio

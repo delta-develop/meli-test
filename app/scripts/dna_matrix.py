@@ -8,7 +8,7 @@ class DNAMatrix:
     matrices.
     """
 
-    MINIMUM_COINCIDENCES = os.getenv("MINIMUM_COINCIDENCES", 3)
+    MINIMUM_COINCIDENCES = int(os.getenv("MINIMUM_COINCIDENCES", "3"))
 
     def __init__(self, dna_sequences: List) -> None:
         """Each matrix is initialized with the dna matrix data, the size of that

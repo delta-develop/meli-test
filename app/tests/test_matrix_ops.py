@@ -7,6 +7,8 @@ from app.tests.fixtures import (
     empty_matrix,
     horizontal_matrix,
     single_matrix,
+    invalid_matrix,
+    diagonal_matrix_upper,
 )
 
 
@@ -21,14 +23,29 @@ async def test_matrix_rotation(horizontal_matrix):
 
 @pytest.mark.asyncio
 async def test_pattern_lookup(horizontal_matrix):
-    first_sequence = horizontal_matrix.dna_sequences[0]
-    second_sequence = horizontal_matrix.dna_sequences[1]
+    first_sequence = "ACGTAAAACGT"
+    second_sequence = "ACGTCCCCAC"
+    third_sequence = "CGTATTTTCGTA"
 
     first_result = await horizontal_matrix.pattern_lookup(first_sequence)
     second_result = await horizontal_matrix.pattern_lookup(second_sequence)
+    third_result = await horizontal_matrix.pattern_lookup(third_sequence)
 
     assert first_result == False
-    assert second_result == True
+    assert second_result == False
+    assert third_result == True
+
+
+@pytest.mark.asyncio
+async def test_diagonal_matrix_upper(diagonal_matrix_upper):
+    result = await diagonal_matrix_upper.diagonal_search()
+    assert result == True
+
+
+@pytest.mark.asyncio
+async def test_invalid_matrix(invalid_matrix):
+    result = await invalid_matrix.row_search()
+    assert result == None
 
 
 @pytest.mark.asyncio

@@ -45,9 +45,9 @@ async def get_statistics() -> dict:
         },
         {
             "$project": {
-                "mutants": "$Mutants",
-                "non-mutants": "$Non-mutants",
-                "ratio_mutants-non_mutants": {"$divide": ["$Mutants", "$Non-mutants"]},
+                "count_mutant_dna": "$Mutants",
+                "count_human_dna": "$Non-mutants",
+                "ratio": {"$divide": ["$Mutants", "$Non-mutants"]},
             }
         },
     ]
@@ -55,5 +55,13 @@ async def get_statistics() -> dict:
 
     async for item in stats:
         result = item
+
+    if not "count_human_dna" in result:
+        result["count_human_dna"] = 0
+        result["ratio"] = 0
+
+    if not "count_mutant_dna" in result:
+        result["count_mutant_dna"] = 0
+        result["ratio"] = 0
 
     return result
