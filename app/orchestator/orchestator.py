@@ -36,7 +36,7 @@ async def analyze_dna(request: DNAMatrixSchema, response: Response) -> dict:
         response.status_code = status.HTTP_403_FORBIDDEN
     elif is_mutant == None:
         response.status_code = status.HTTP_400_BAD_REQUEST
-        response_json["is_mutant"] = "corrupt input"
+        response_json["is_mutant"] = "corrupted input"
 
     return response_json
 

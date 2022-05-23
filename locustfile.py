@@ -7,25 +7,10 @@ class HelloWorldUser(FastHttpUser):
     def is_mutant(self):
         self.client.post(
             "/mutant/",
-            json={
-                "dna": [
-                    "AAAAAA",
-                    "CCCCCC",
-                    "GGGGGG",
-                    "TTTTTT",
-                    "AAAAAA",
-                    "CCCCCC",
-                ]
-            },
+            json={"dna": generate_dna(randint(6, 8))},
         )
 
 
-def generate_dna():
+def generate_dna(size):
     a = ["A", "C", "G", "T"]
-    return ["".join([a[randint(0, 3)] for _ in range(4)]) for __ in range(4)]
-    # @task
-    # def not_mutant(self):
-    #     self.client.post(
-    #         "/mutant/",
-    #         json={"dna": ["ATGCGA", "CAGTTC", "TTATGC", "AGAAGG", "CCCTTA", "TCCCGG"]},
-    #     )
+    return ["".join([a[randint(0, 3)] for _ in range(size)]) for __ in range(size)]
