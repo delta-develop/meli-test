@@ -176,9 +176,9 @@ $ make coverage_report
 Name                                    Stmts   Miss  Cover   Missing
 ---------------------------------------------------------------------
 app/__init__.py                             0      0   100%
-app/app.py                                 24      5    79%   27, 33-34, 45-46
+app/app.py                                 22      5    77%   23, 38-39, 50-51
 app/db/__init__.py                          0      0   100%
-app/db/operations.py                       19      6    68%   14-15, 60-61, 64-65
+app/db/operations.py                       19      2    89%   14-15
 app/models/__init__.py                      0      0   100%
 app/models/dna_matrix.py                    4      0   100%
 app/orchestator/__init__.py                 0      0   100%
@@ -192,9 +192,9 @@ app/scripts/dna_handlers.py                29      0   100%
 app/scripts/dna_matrix.py                  51      0   100%
 app/scripts/person.py                       9      0   100%
 app/settings/__init__.py                    0      0   100%
-app/settings/settings.py                   39      8    79%   40-43, 57-58, 63-64
+app/settings/settings.py                   41      8    80%   40-43, 57-58, 63-64
 app/tests/__init__.py                       0      0   100%
-app/tests/conftest.py                       8      0   100%
+app/tests/conftest.py                      10      0   100%
 app/tests/fixtures.py                      50      0   100%
 app/tests/test_handlers.py                 47      0   100%
 app/tests/test_integration.py              35      0   100%
@@ -205,7 +205,7 @@ app/utils/__init__.py                       0      0   100%
 app/utils/helpers.py                        8      0   100%
 app/utils/queue.py                         26      0   100%
 ---------------------------------------------------------------------
-TOTAL                                     544     21    96%
+TOTAL                                     546     17    97%
 ```
 
 ### Running locust
