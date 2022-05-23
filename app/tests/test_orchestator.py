@@ -1,8 +1,9 @@
 from app.models.dna_matrix import DNAMatrixSchema
-from app.orchestator.orchestator import analyze_dna
+from app.orchestator.orchestator import analyze_dna, mongo_queue, enqueue_data
 import pytest
 from fastapi import Response
 from app.tests.fixtures import invalid_matrix, horizontal_matrix, bad_matrix
+from app.settings.settings import ENVIRONMENT
 
 
 @pytest.fixture
@@ -38,3 +39,21 @@ async def test_invalid_request(invalid_matrix, response):
         "is_mutant": "corrupted input",
     }
     assert response.status_code == 400
+
+
+@pytest.mark.skipif(ENVIRONMENT != "TESTING", reason="This test writes on db")
+@pytest.mark.asyncio
+async def test_auto_empty_queue(horizontal_matrix, bad_matrix, response):
+    await mongo_queue.empty_the_queue()
+    assert mongo_queue.queue_size == 0
+
+    await enqueue_data({"hello": "world"})
+    assert mongo_queue.queue_size == 1
+
+    await enqueue_data({"hello": "world"})
+
+    assert mongo_queue.queue_size == 2
+    assert mongo_queue.ready_to_send == False
+
+    await enqueue_data({"hello": "world"})
+    assert mongo_queue.queue_size == 0
