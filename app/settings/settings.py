@@ -84,3 +84,7 @@ def get_collection(database: Any, collection_name: str) -> Any:
 
 database, collection_name = get_database_and_collection_name(ENVIRONMENT)
 collection = get_collection(database, collection_name)
+
+
+def drop_testing_db():
+    client.drop_database("testing_dna_analysis")

@@ -54,10 +54,13 @@ In this case the call to ```is_mutant(dna)``` function returns ```True```
    4. Unit tests coverage greater than 80%.
 
 ---
+<br>
 
 # API URL: http://ec2-54-160-205-255.compute-1.amazonaws.com/
 
----
+<br>
+
+
 ## The solution
 
 ### Dependences
@@ -68,31 +71,35 @@ In this case the call to ```is_mutant(dna)``` function returns ```True```
 
 ### Understanding .env file
 ```sh
+
 # AWS Config
-MONGO_HOST = "ec2-54-92-200-9.compute-1.amazonaws.com"
-DBPASSWORD = "mongo_server_password" # MongoDB password
-ENVIRONMENT = "PROD" # API environment, could be "PROD" or "DEV" and will write on different db
-MAX_QUEUE_SIZE = 1000 # The requests queue sie before being emptied (you'll undersant later)
-EMPTYING_TIME = 60 # The time to wait until emptying the queue even if it is not full
+# MONGO_HOST = "ec2-54-92-200-9.compute-1.amazonaws.com"
+# DBPASSWORD = "top_secret_aws_password"
+# ENVIRONMENT = "PROD"
+# MAX_QUEUE_SIZE = 500
 
 # Local Config
-# MONGO_HOST = "127.0.0.1"  # Only for local configuration
-# DBPASSWORD = "root"
-# ENVIRONMENT = "DEV"
-# MAX_QUEUE_SIZE = 500
-# EMPTYING_TIME = 60
+# MONGO_HOST = "127.0.0.1"  # Running api independently
+MONGO_HOST = "mongo" # Running api inside docker
+DBPASSWORD = "root" # MongoDB password
+ENVIRONMENT = "DEV" # API environment, could be "PROD" or "DEV" and will write on different db
+MAX_QUEUE_SIZE = 500 # The requests queue sie before being emptied (you'll undersant later)
+
 
 # Testing Config
+# MONGO_HOST = "127.0.0.1"
 # ENVIRONMENT = "TESTING"
 # MAX_QUEUE_SIZE = 3
-# EMPTYING_TIME = 20
+# DBPASSWORD = "root"
 
 # General configurations
-MONGO_PORT = 27017 # MongoDB port
-DBUSERNAME = "root" # MongoDB username
-
+MONGO_PORT = 27017
+DBUSERNAME = "root"
+EMPTYING_TIME = 30 # The time to wait until emptying the queue even if it is not full
 WORKER_CLASS = "uvicorn.workers.UvicornWorker" # Worker class for gunicorn to run the app
-MINIMUM_COINCIDENCES = 3 # Minimum coincidences to consider a human, mutant
+MINIMUM_COINCIDENCES = 3 # Minimum DNA pattern coincidences to consider a human, mutant
+
+
 ```
 
 ## Note:
@@ -130,12 +137,19 @@ $ make up_only_db
 $ uvicorn app.app:app --host 127.0.0.1 --port 8000 --workers 2
 
 # Using gunicorn
-$ gunicorn app.app:app 0.0.0.0:8000 --workers 2 --worker-class uvicorn.workers.UvicornWorkers --threads 2
+$ gunicorn -c app/gunicorn_conf.py app.app:app --threads 2
 
-# --workers --worker-class and --threads are optional but if
-# you use it, at least --workers must be with --worker-class
-# Just use one of them.
+# Just use one of them, --threads is optional.
 ```
+
+After that, API will be available on `http://localhost:8000` MongoDB on `http://localhost:27017` with credentials ` user: "root", password: "root"`  and MongoExpress at `http://localhost:8081`. <br><br>
+
+---
+
+## Testing
+
+The test are running on pytest with `coverage` module to measure the unit testing coverage for this project. Additional its installed `locust` which can run load tests, more details below.
+
 
 ### Runining the Unit Tests
 
@@ -153,7 +167,10 @@ $ make run_tests
 $ make coverage_report
 ```
 
-Last coverage report
+### Last coverage report
+
+(Only with the `ENVIRONMENT = "TESTING"`) and running with `make up_only_db`.
+
 
 ```
 Name                                    Stmts   Miss  Cover   Missing
@@ -190,6 +207,17 @@ app/utils/queue.py                         26      0   100%
 ---------------------------------------------------------------------
 TOTAL                                     544     21    96%
 ```
+
+### Running locust
+Locust file already have configured a random matrix generator, configured to generate matrices of sizes between `MINIMUM_MATRIX_SIZE` and `MAXIMUM_MATRIX_SIZE` variables values located in same locustfile.py
+
+To run locust just execute:
+
+```sh
+# With virtual environment activated
+$ locust
+```
+And then go to your http://localhost:8089, choose how many testers you want ant locust will to their magic ✨
 
 Theres an additional mini documentation which give the opportunnity to tests some endpoints, it could be accesed using `/docs/` endpoints.
 

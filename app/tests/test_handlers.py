@@ -9,9 +9,9 @@ from app.tests.fixtures import (
     diagonal_matrix_lower,
     empty_matrix,
     horizontal_matrix,
+    invalid_matrix,
     single_matrix,
     vertical_matrix,
-    invalid_matrix,
 )
 from app.utils.helpers import configure_handlers
 

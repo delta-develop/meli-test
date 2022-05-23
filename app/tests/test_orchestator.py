@@ -1,9 +1,9 @@
-from app.models.dna_matrix import DNAMatrixSchema
-from app.orchestator.orchestator import analyze_dna, mongo_queue, enqueue_data
 import pytest
-from fastapi import Response
-from app.tests.fixtures import invalid_matrix, horizontal_matrix, bad_matrix
+from app.models.dna_matrix import DNAMatrixSchema
+from app.orchestator.orchestator import analyze_dna, enqueue_data, mongo_queue
 from app.settings.settings import ENVIRONMENT
+from app.tests.fixtures import bad_matrix, horizontal_matrix, invalid_matrix
+from fastapi import Response
 
 
 @pytest.fixture
