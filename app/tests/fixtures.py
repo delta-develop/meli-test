@@ -17,6 +17,20 @@ def bad_matrix() -> DNAMatrix:
 
 
 @pytest.fixture
+def invalid_matrix() -> DNAMatrix:
+    matrix = [
+        "XAGGGT",
+        "TACAAT",
+        "TACGCA",
+        "GACGTC",
+        "GTTGTA",
+        "GTTCTA",
+    ]
+
+    return DNAMatrix(matrix)
+
+
+@pytest.fixture
 def single_matrix() -> DNAMatrix:
     matrix = [
         "GAAAAG",
@@ -48,10 +62,10 @@ def horizontal_matrix() -> DNAMatrix:
 def vertical_matrix() -> DNAMatrix:
     matrix = [
         "CTCTCT",
-        "TCTCTC",
-        "CGAGGT",
+        "TCTCCC",
+        "TGAGGT",
         "TGATCC",
-        "CGACTT",
+        "TGACTT",
         "TGATCC",
     ]
 
@@ -63,9 +77,9 @@ def diagonal_matrix() -> DNAMatrix:
     matrix = [
         "CTTTCA",
         "TCCCAT",
-        "CTTACG",
-        "CTATGT",
-        "CACGCT",
+        "CTCACG",
+        "CCATGT",
+        "TACGCT",
         "ATGTTC",
     ]
 
@@ -80,7 +94,7 @@ def angled_matrix() -> DNAMatrix:
         "CGCTCC",
         "TGTCTT",
         "CGTTTC",
-        "TGCCCT",
+        "TGCCCC",
     ]
 
     return DNAMatrix(matrix)
@@ -103,11 +117,25 @@ def empty_matrix() -> DNAMatrix:
 @pytest.fixture
 def diagonal_matrix_lower() -> DNAMatrix:
     matrix = [
-        "CCCTTT",
+        "TCCTTT",
         "ATTCCC",
-        "GACTCT",
+        "GATTCT",
         "TGATTT",
         "TTGACC",
+        "TTTGCC",
+    ]
+
+    return DNAMatrix(matrix)
+
+
+@pytest.fixture
+def diagonal_matrix_upper() -> DNAMatrix:
+    matrix = [
+        "TTCTTT",
+        "GTTCCC",
+        "GGTTCT",
+        "TGCTTC",
+        "TTGATC",
         "TTTGCC",
     ]
 

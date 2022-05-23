@@ -22,4 +22,4 @@ async def is_mutant(
     """
     analysis_result = await analyze_dna(request, response)
     background_tasks.add_task(enqueue_data, analysis_result)
-    return analysis_result
+    return {"is_mutant": analysis_result["is_mutant"]}
