@@ -26,9 +26,6 @@ restart:
 		docker-compose -f docker-compose.yml stop
 		docker-compose -f docker-compose.yml up -d
 
-ps:
-		docker-compose -f docker-compose.yml ps
-
 up_only_db:
 		docker-compose -f docker-compose_only_db.yml up -d
 
