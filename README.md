@@ -65,17 +65,31 @@ In this case the call to ```is_mutant(dna)``` function returns ```True```
 
 ### Understanding .env file
 ```sh
-MONGO_HOST = "localhost" # Where is MongoDB running
-MONGO_PORT = "27017" # MongoDB port
-DBUSERNAME = "username" # MongoDB username
-DBPASSWORD = "password" # MongoDB password
-
+# AWS Config
+MONGO_HOST = "ec2-54-92-200-9.compute-1.amazonaws.com"
+DBPASSWORD = "mongo_server_password" # MongoDB password
 ENVIRONMENT = "PROD" # API environment, could be "PROD" or "DEV" and will write on different db
-MAX_QUEUE_SIZE = 5 # The requests queue sie before being emptied (you'll undersant later)
-EMPTYING_TIME = 20 # The time to wait until emptying the queue even if it is not full
-MINIMUM_COINCIDENCES = 3 # Minimum coincidences to consider a human, mutant.,„„„„„„„„„„„„„„„„,,,,,,,,,,,,,,,,,,
+MAX_QUEUE_SIZE = 1000 # The requests queue sie before being emptied (you'll undersant later)
+EMPTYING_TIME = 60 # The time to wait until emptying the queue even if it is not full
+
+# Local Config
+# MONGO_HOST = "127.0.0.1"  # Only for local configuration
+# DBPASSWORD = "root"
+# ENVIRONMENT = "DEV"
+# MAX_QUEUE_SIZE = 500
+# EMPTYING_TIME = 60
+
+# Testing Config
+# ENVIRONMENT = "TESTING"
+# MAX_QUEUE_SIZE = 3
+# EMPTYING_TIME = 20
+
+# General configurations
+MONGO_PORT = 27017 # MongoDB port
+DBUSERNAME = "root" # MongoDB username
 
 WORKER_CLASS = "uvicorn.workers.UvicornWorker" # Worker class for gunicorn to run the app
+MINIMUM_COINCIDENCES = 3 # Minimum coincidences to consider a human, mutant
 ```
 
 ### Running the application
@@ -128,3 +142,46 @@ $ make run_tests
 
 $ make coverage_report
 ```
+
+Last coverage report
+
+```
+Name                                    Stmts   Miss  Cover   Missing
+---------------------------------------------------------------------
+app/__init__.py                             0      0   100%
+app/app.py                                 24      5    79%   27, 33-34, 45-46
+app/db/__init__.py                          0      0   100%
+app/db/operations.py                       19      6    68%   14-15, 60-61, 64-65
+app/models/__init__.py                      0      0   100%
+app/models/dna_matrix.py                    4      0   100%
+app/orchestator/__init__.py                 0      0   100%
+app/orchestator/orchestator.py             26      0   100%
+app/routes/__init__.py                      0      0   100%
+app/routes/mutant_router.py                 9      0   100%
+app/routes/stats_router.py                  7      0   100%
+app/scripts/__init__.py                     0      0   100%
+app/scripts/dna_handler_definition.py      19      2    89%   19, 28
+app/scripts/dna_handlers.py                29      0   100%
+app/scripts/dna_matrix.py                  51      0   100%
+app/scripts/person.py                       9      0   100%
+app/settings/__init__.py                    0      0   100%
+app/settings/settings.py                   39      8    79%   40-43, 57-58, 63-64
+app/tests/__init__.py                       0      0   100%
+app/tests/conftest.py                       8      0   100%
+app/tests/fixtures.py                      50      0   100%
+app/tests/test_handlers.py                 47      0   100%
+app/tests/test_integration.py              35      0   100%
+app/tests/test_matrix_ops.py               62      0   100%
+app/tests/test_orchestator.py              39      0   100%
+app/tests/test_queue.py                    33      0   100%
+app/utils/__init__.py                       0      0   100%
+app/utils/helpers.py                        8      0   100%
+app/utils/queue.py                         26      0   100%
+---------------------------------------------------------------------
+TOTAL                                     544     21    96%
+```
+
+Theres an additional mini documentation which give the opportunnity to tests some endpoints, it could be accesed using `/docs/` endpoints.
+
+## Author: Leonardo Daniel Hernández García
+### contact: leohg.ipn@gmail.com
