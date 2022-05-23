@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-import os
-from functools import lru_cache
-
 from fastapi import FastAPI
 from fastapi_utils.tasks import repeat_every
 
@@ -10,12 +7,11 @@ from app.orchestator.orchestator import mongo_queue
 from app.routes.mutant_router import router as DNAAnalysisRouter
 from app.routes.stats_router import router as StatsRouter
 from app.settings.settings import (
+    EMPTYING_TIME,
+    ENVIRONMENT,
     create_collection,
     get_database_and_collection_name,
-    ENVIRONMENT,
-    EMPTYING_TIME,
 )
-
 
 app = FastAPI()
 app.include_router(DNAAnalysisRouter, tags=["DNAAnalysis"], prefix="/mutant")

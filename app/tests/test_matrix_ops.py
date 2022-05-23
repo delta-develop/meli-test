@@ -4,11 +4,11 @@ from app.tests.fixtures import (
     bad_matrix,
     diagonal_matrix,
     diagonal_matrix_lower,
+    diagonal_matrix_upper,
     empty_matrix,
     horizontal_matrix,
-    single_matrix,
     invalid_matrix,
-    diagonal_matrix_upper,
+    single_matrix,
 )
 
 

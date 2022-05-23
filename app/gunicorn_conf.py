@@ -4,6 +4,10 @@ import json
 import multiprocessing
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 workers_per_core_str = os.getenv("WORKERS_PER_CORE", "2")
 web_concurrency_str = os.getenv("WEB_CONCURRENCY", None)
 host = os.getenv("HOST", "0.0.0.0")
@@ -25,17 +29,14 @@ if web_concurrency_str:
 else:
     web_concurrency = int(default_web_concurrency)
 
-if worker_class_env:
-    wc = worker_class_env
-else:
-    wc = "sync"
+
 # Gunicorn config variables
 loglevel = use_loglevel
 workers = web_concurrency
 bind = use_bind
 keepalive = 120
 errorlog = "-"
-worker_class = wc
+worker_class = worker_class_env
 
 
 # For debugging and testing

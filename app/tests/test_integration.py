@@ -1,9 +1,9 @@
 import pytest
 from app.app import app
-from httpx import AsyncClient
 from app.settings.settings import ENVIRONMENT
-from app.tests.fixtures import horizontal_matrix, bad_matrix, invalid_matrix
+from app.tests.fixtures import bad_matrix, horizontal_matrix, invalid_matrix
 from fastapi import status
+from httpx import AsyncClient
 
 
 @pytest.mark.asyncio
