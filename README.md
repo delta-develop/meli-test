@@ -95,6 +95,13 @@ WORKER_CLASS = "uvicorn.workers.UvicornWorker" # Worker class for gunicorn to ru
 MINIMUM_COINCIDENCES = 3 # Minimum coincidences to consider a human, mutant
 ```
 
+## Note:
+In case you need to run the application in localhost, please uncomment the `Local Config` section and comment the `AWS Config` and `Testing Config` sections. Otherwise, the application may not work properly.
+
+<br>
+
+---
+
 ### Running the application
 Once the depencences are installed and the .env file is properly configured, there are two ways to run the application, one using only `make` command for MongoDB, Mongo Express and FastAPI, and the other running FastAPI independently.
 
