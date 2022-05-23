@@ -24,7 +24,16 @@ app.include_router(StatsRouter, tags=["Statistics"], prefix="/stats")
 
 @app.get("/")
 async def root():
-    return {"hello": "world"}
+    return {
+        "Author": "Leonardo Daniel Hernández García",
+        "Contact": "leohg.ipn@gmail.com",
+        "Running_on": "FastAPI",
+        "Database": "MongoDB",
+        "Hosted_on": "AWS EC2 Instances",
+        "Title": "Software Development Engineer test for Mercado Libre",
+        "Notes": "I'm resisting the urge to put an easter egg on this project -_-' ",
+        "Apologies": "I'm sorry, I don't have more energy to build a decent home page.",
+    }
 
 
 @app.on_event("startup")
